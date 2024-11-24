@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment{
         DOCKER_CREDS = credentials('677d51b6-cb01-4698-be13-fc7f2f76b162')
+        DOCKER_IMAGE = 'tommyquatretempspxl/dtap'
     }
     stages {
         stage ('cleanup'){
@@ -36,23 +37,22 @@ pipeline {
         }
         stage ('Build artifact'){
             steps{
-                sh 'docker build -t tommyquatretempspxl/dtap .'
+                sh 'docker build -t ${DOCKER_IMAGE} .'
                 sh 'docker images'
             }
         }
         stage ('Push artifact'){
             steps{
                 sh 'docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW'
-                sh 'docker push tommyquatretempspxl/dtap:latest'
+                sh 'docker push ${DOCKER_IMAGE}:latest'
             }
         }
         stage ('deployment'){
             steps{
                 sh 'docker image prune -af'
-                sh 'docker run -d -p 3000:3000 tommyquatretempspxl/dtap:latest'
+                sh 'docker run -d -p 3000:3000 ${DOCKER_IMAGE}:latest'
                 sh 'docker ps'
             }
         }
-        
     }
 }
