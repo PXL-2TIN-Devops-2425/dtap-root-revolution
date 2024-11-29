@@ -13,6 +13,7 @@ pipeline {
                 sshagent([SSH_CREDENTIALS_ID]) { 
                     sh '''
                     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${PROD_SERVER} "
+                    docker stop ${CONTAINER_NAME}
                     docker rm -f ${CONTAINER_NAME} || true
                     "
                     '''
