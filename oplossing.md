@@ -2,18 +2,43 @@ Vul onderstaande aan met de antwoorden op de vragen uit de readme.md file. Wil j
 opmaak met Markdown.
 
 a)
-![alt text](image-9.png)
-![alt text](image-2.png)
 
-![alt text](image.png)
-![alt text](image-3.png)
-![alt text](image-4.png)
-![alt text](image-5.png)
-![alt text](image-6.png)
-github
-![alt text](image-7.png)
-docker
-![alt text](image-8.png)
+Om docker te kunnen gebruiken in jenkins moeten we eerst docker installeren door volgende commando's te gebruiken:
 
+Hier updaten we onze ubuntu server zodat alles up-to-date is.
+![alt text](images/image-10.png)
+
+Met dit commando wordt er docker geinstalleerd.
+![alt text](images/image-12.png)
+
+Door het volgende commando uit te voeren kunnen we zien dat docker werkt met sudo.
+![alt text](images/image-13.png)
+
+Als we deze commando's uitvoeren geven we permissies aan de jenkins gebruiker om docker te gebruiken zonder sudo.
+![alt text](images/image-9.png)
+
+Hier testen we docker zonder sudo.
+![alt text](images/image-2.png)
+
+Deze stappen doen we nog een keer voor de productie server maar dan met de naam ubuntu i.p.v jenkins.
+
+Nu onze servers docker kunnen gebruiken moeten we de docker image op docker hub plaatsen.
+
+Eerst builden we de docker image van de calculator app.
+![alt text](images/image.png)
+
+Nu loggen we in op docker hub. Daarna taggen we de image met het docker hub account en pushen we deze vervolgens naar docker hub.
+![alt text](images/image-3.png)
+
+Hier is een foto van de docker image op docker hub.
+![alt text](images/image-4.png)
+
+Om de dockerfile te kunnen gebruiken moeten wij credentials aanmaken met de gebruikersnaam en het wachtwoord van docker hub zoals in onderstaande foto.
+![alt text](images/image-8.png)
+
+Voor de connectie met de production server moeten wij nog eens credentials aanmaken waarbij we de vockey kopieeren en plakken in de Private Key sectie van de credentials.
+![alt text](images/image-14.png)
+
+Nu kunnen we beginnen aan de pipeline te schrijven.
 
 b)
