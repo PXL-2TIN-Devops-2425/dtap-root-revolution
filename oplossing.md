@@ -8,13 +8,25 @@ Om docker te kunnen gebruiken in jenkins moeten we eerst docker installeren. We 
 Hier updaten we onze ubuntu server zodat alles up-to-date is.
 ![alt text](images/image-10.png)
 
-Met dit commando installeren we docker.
-![alt text](images/image-12.png)
+Hier installeren wij packages die het downloaden van files beveiligd. Dit is handig voor docker images te downloaden.
+![alt text](images/image-16.png)
+
+met dit commando voegen we Docker's GNU Privacy Guard key toe aan ons systeem. Dit zorgt ervoor dat de packages die we downloaden van pocker hub autentiek en niet veranderd zijn.
+![alt text](images/image-15.png)
+
+Als we dit commando uitvoeren voegen we het officiele docker repository toe.
+![alt text](images/image-17.png)
+
+Hier updaten we onog eens alles zodat alles up-to-date is voor de installatie.
+![alt text](images/image-10.png)
+
+Nu installeren we de docker community edition, de cli voor de community edition en een containerd.io runtime die docker ondersteunt.
+![alt text](images/image-18.png)
 
 Door het volgende commando uit te voeren kunnen we zien dat docker werkt met sudo.
 ![alt text](images/image-13.png)
 
-Als we deze commando's uitvoeren geven we permissies aan de jenkins gebruiker om docker te gebruiken zonder sudo.
+Als we deze commando's uitvoeren geven we permissies aan de jenkins gebruiker om docker te gebruiken zonder sudo.                 
 ![alt text](images/image-9.png)
 
 Hier testen we docker zonder sudo.
