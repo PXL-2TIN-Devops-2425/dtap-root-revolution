@@ -3,12 +3,12 @@ opmaak met Markdown.
 
 a)
 
-Om docker te kunnen gebruiken in jenkins moeten we eerst docker installeren door volgende commando's te gebruiken:
+Om docker te kunnen gebruiken in jenkins moeten we eerst docker installeren. We doen dit aan de hand van volgende commando's:
 
 Hier updaten we onze ubuntu server zodat alles up-to-date is.
 ![alt text](images/image-10.png)
 
-Met dit commando wordt er docker geinstalleerd.
+Met dit commando installeren we docker.
 ![alt text](images/image-12.png)
 
 Door het volgende commando uit te voeren kunnen we zien dat docker werkt met sudo.
