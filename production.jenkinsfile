@@ -1,9 +1,62 @@
 pipeline {
     agent any
+    
+    environment {
+        PROD_SERVER = '54.166.141.254'
+        SSH_CREDENTIALS_ID = '239a38a7-6643-4bc6-85b8-7272fff21765'
+        DOCKER_IMAGE = 'tommyquatretempspxl/dtap'
+        CONTAINER_NAME = 'calculator-app'
+    }
     stages {
-        stage('dtap production') {
+        stage('Cleanup Prod') {
             steps {
-                echo "good luck..."
+                sshagent([SSH_CREDENTIALS_ID]) { 
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${PROD_SERVER} "
+                    docker stop ${CONTAINER_NAME}
+                    docker rm -f ${CONTAINER_NAME} || true
+                    "
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy Prod') {
+            steps {
+                sshagent([SSH_CREDENTIALS_ID]) { 
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${PROD_SERVER} "
+                    docker pull ${DOCKER_IMAGE}
+                    "
+                    '''
+                }
+            }
+        }
+        
+        stage('Start Prod') {
+            steps {
+                sshagent([SSH_CREDENTIALS_ID]) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${PROD_SERVER} "
+                    docker run -d -p 80:3000 --name ${CONTAINER_NAME} ${DOCKER_IMAGE}
+                    "
+                    '''
+                }
+            }
+        }
+        
+        stage('Test Prod') {
+            steps {
+                //Curls too fast
+                script {
+                    sh 'sleep 1'
+                    def response = sh(script: "curl -o /dev/null -s -w \"%{http_code}\" http://${PROD_SERVER}", returnStdout: true).trim()
+                    if (response != '200') {
+                        error "Production deployment failed. HTTP status code: ${response}"
+                    } else {
+                        echo "Production deployment succeeded. HTTP status code: ${response}"
+                    }
+                }
             }
         }
     }
